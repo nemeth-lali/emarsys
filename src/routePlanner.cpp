@@ -11,13 +11,26 @@ namespace routePlanner {
 
 routePlanner::routePlanner()
 {
-    // TODO Auto-generated constructor stub
 
 }
 
 routePlanner::~routePlanner()
 {
-    // TODO Auto-generated destructor stub
+}
+
+void routePlanner::addPoint(const std::string& locationNameBegin, const std::string& locationNameEnd)
+{
+
+}
+
+void routePlanner::addEndPoint(const std::string& locationName)
+{
+
+}
+
+void routePlanner::printPath(std::ostream& outputStream)
+{
+
 }
 
 } /* namespace routePlanner */
