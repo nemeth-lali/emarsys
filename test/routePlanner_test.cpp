@@ -15,9 +15,11 @@ BOOST_AUTO_TEST_SUITE (routePlannerTest)
 
 BOOST_AUTO_TEST_CASE(Simple1Endpoint)
 {
-
+    RoutePlanner sut;
+    sut.addPoint("A","B");
 }
 
 BOOST_AUTO_TEST_SUITE_END( )
 
 } /* namespace routePlanner */
+src/routePlanner.hpp

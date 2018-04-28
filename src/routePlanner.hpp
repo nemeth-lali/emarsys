@@ -31,9 +31,9 @@ namespace routePlanner {
 /*
  *
  */
-class routePlanner {
+class RoutePlanner {
 public:
-    routePlanner();
+    RoutePlanner();
 
     /**
      * @brief adds a new waypoint
@@ -44,16 +44,17 @@ public:
     bool addPoint(const std::string& locationNameBegin, const std::string& locationNameEnd);
 
     /**
-     * @brief Mark the Point as endPoint
+     * @brief Add the Point as endPoint
      * @param locationName
      */
-    void markAsEndPoint(const std::string& locationName);
+    void addEndPoint(const std::string& locationName);
 
     /**
      * @brief Print the path to the output stream
      * @param outputStream
      */
     void printPath(std::ostream& outputStream);
+
     virtual ~routePlanner();
 private:
     struct PathNode

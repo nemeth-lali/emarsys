@@ -7,28 +7,28 @@
 
 #include "routePlanner.hpp"
 
-namespace routePlanner {
+namespace PoutePlanner {
 
-routePlanner::routePlanner()
+RoutePlanner::RoutePlanner()
 {
 
 }
 
-routePlanner::~routePlanner()
+RoutePlanner::~RoutePlanner()
 {
 }
 
-void routePlanner::addPoint(const std::string& locationNameBegin, const std::string& locationNameEnd)
-{
-
-}
-
-void routePlanner::addEndPoint(const std::string& locationName)
+void addPoint(const std::string& locationNameBegin, const std::string& locationNameEnd)
 {
 
 }
 
-void routePlanner::printPath(std::ostream& outputStream)
+void addEndPoint(const std::string& locationName)
+{
+
+}
+
+void printPath(std::ostream& outputStream)
 {
 
 }
