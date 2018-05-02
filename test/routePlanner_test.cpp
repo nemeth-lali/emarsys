@@ -45,10 +45,56 @@ BOOST_AUTO_TEST_CASE(Simple2Endpoints)
     sut.createSpanningTree();
     std::string result; // no initialization required
     ss >> result;
-    BOOST_CHECK_EQUAL("x", result);
-    ss >> result;
-    BOOST_CHECK_EQUAL("y", result);
+    BOOST_CHECK_EQUAL("xz", result);
 }
+
+
+/**
+ * Testcase
+ * x =>
+ * y => z
+ * z =>
+ */
+BOOST_AUTO_TEST_CASE(Simple2Endpoints)
+{
+    std::stringstream ss;
+    RoutePlanner sut;
+    sut.addEndPoint("x");
+    sut.addPoint("y", "z");
+    sut.addEndPoint("z");
+    sut.printPath(ss);
+    sut.createSpanningTree();
+    std::string result; // no initialization required
+    ss >> result;
+    BOOST_CHECK_EQUAL("xzy", result);
+}
+
+/**
+ * Testcase
+ * u =>
+ * v => w
+ * w => z
+ * x => u
+ * y => v
+ * z =>
+ */
+BOOST_AUTO_TEST_CASE(Simple2Endpoints)
+{
+    std::stringstream ss;
+    RoutePlanner sut;
+    sut.addEndPoint("u");
+    sut.addPoint("v", "w");
+    sut.addPoint("w", "z");
+    sut.addPoint("x", "u");
+    sut.addPoint("y", "v");
+    sut.addEndPoint("z");
+    sut.printPath(ss);
+    sut.createSpanningTree();
+    std::string result; // no initialization required
+    ss >> result;
+    BOOST_CHECK_EQUAL("xuyvwz", result);
+}
+
 
 BOOST_AUTO_TEST_SUITE_END( )
 
