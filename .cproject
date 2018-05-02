@@ -141,7 +141,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1341455153" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.197557824" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
 								<option id="gnu.cpp.link.option.debugging.codecov.944342677" name="Generate gcov information (-ftest-coverage -fprofile-arcs)" superClass="gnu.cpp.link.option.debugging.codecov" value="true" valueType="boolean"/>
-								<option id="gnu.cpp.link.option.libs.1612954886" superClass="gnu.cpp.link.option.libs" valueType="libs">
+								<option id="gnu.cpp.link.option.libs.1612954886" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="boost_unit_test_framework"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.948857788" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">

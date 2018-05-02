@@ -6,8 +6,9 @@
  */
 
 #include "routePlanner.hpp"
+#include <ostream>
 
-namespace PoutePlanner {
+namespace routePlanner {
 
 RoutePlanner::RoutePlanner()
 {
@@ -18,17 +19,22 @@ RoutePlanner::~RoutePlanner()
 {
 }
 
-void addPoint(const std::string& locationNameBegin, const std::string& locationNameEnd)
+void RoutePlanner::addPoint(const std::string& locationNameBegin, const std::string& locationNameEnd)
 {
 
 }
 
-void addEndPoint(const std::string& locationName)
+void RoutePlanner::addEndPoint(const std::string& locationName)
 {
 
 }
 
-void printPath(std::ostream& outputStream)
+void RoutePlanner::printPath(std::ostream& outputStream) const
+{
+
+}
+
+void RoutePlanner::createSpanningTree()
 {
 
 }
