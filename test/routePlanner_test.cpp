@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(Simple1Endpoint)
  * =>x
  * =>z
  */
-BOOST_AUTO_TEST_CASE(Simple1Endpoint)
+BOOST_AUTO_TEST_CASE(Simple2Endpoints)
 {
     std::stringstream ss;
     RoutePlanner sut;
