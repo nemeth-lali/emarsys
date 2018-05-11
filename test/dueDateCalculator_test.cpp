@@ -26,7 +26,7 @@ BOOST_AUTO_TEST_CASE(SimpleInput)
     ss >> std::get_time(&t, "%Y-%m-%dT%H:%M%S");
     std::mktime(&t);
     tm result = DueDateCalculator::calculateDueDate(t, 2);
-    BOOST_CHECK_EQUAL("Fri May 11 11:15:00 2018", std::asctime(&t));
+    BOOST_CHECK_EQUAL("Fri May 11 11:15:00 2018", std::asctime(&result));
 }
 
 BOOST_AUTO_TEST_CASE(MultipleDays)
@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE(MultipleDays)
     ss >> std::get_time(&t, "%Y-%m-%dT%H:%M%S");
     std::mktime(&t);
     tm result = DueDateCalculator::calculateDueDate(t, 42);
-    BOOST_CHECK_EQUAL("Fri May 16 11:15:00 2018", std::asctime(&t));
+    BOOST_CHECK_EQUAL("Fri May 16 11:15:00 2018", std::asctime(&result));
 }
 
 BOOST_AUTO_TEST_CASE(LastDayOfMonth)
@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE(LastDayOfMonth)
     ss >> std::get_time(&t, "%Y-%m-%dT%H:%M%S");
     std::mktime(&t);
     tm result = DueDateCalculator::calculateDueDate(t, 2);
-    BOOST_CHECK_EQUAL("Fri Jun 01 10:15:00 2018", std::asctime(&t));
+    BOOST_CHECK_EQUAL("Fri Jun 01 10:15:00 2018", std::asctime(&result));
 }
 
 BOOST_AUTO_TEST_CASE(LastDayOfYear)
@@ -59,7 +59,7 @@ BOOST_AUTO_TEST_CASE(LastDayOfYear)
     ss >> std::get_time(&t, "%Y-%m-%dT%H:%M%S");
     std::mktime(&t);
     tm result = DueDateCalculator::calculateDueDate(t, 2);
-    BOOST_CHECK_EQUAL("Tue Jan 01 10:15:00 2019", std::asctime(&t));
+    BOOST_CHECK_EQUAL("Tue Jan 01 10:15:00 2019", std::asctime(&result));
 }
 
 BOOST_AUTO_TEST_CASE(FridayCase)
@@ -70,7 +70,7 @@ BOOST_AUTO_TEST_CASE(FridayCase)
     ss >> std::get_time(&t, "%Y-%m-%dT%H:%M%S");
     std::mktime(&t);
     tm result = DueDateCalculator::calculateDueDate(t, 2);
-    BOOST_CHECK_EQUAL("Mon May 14 10:15:00 2018", std::asctime(&t));
+    BOOST_CHECK_EQUAL("Mon May 14 10:15:00 2018", std::asctime(&result));
 }
 
 BOOST_AUTO_TEST_CASE(HalfHourCase)
@@ -81,7 +81,7 @@ BOOST_AUTO_TEST_CASE(HalfHourCase)
     ss >> std::get_time(&t, "%Y-%m-%dT%H:%M%S");
     std::mktime(&t);
     tm result = DueDateCalculator::calculateDueDate(t, 2.5);
-    BOOST_CHECK_EQUAL("Mon May 14 10:45:00 2018", std::asctime(&t));
+    BOOST_CHECK_EQUAL("Mon May 14 10:45:00 2018", std::asctime(&result));
 }
 
 ///Faulty cases
