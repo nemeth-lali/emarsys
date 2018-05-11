@@ -51,11 +51,11 @@ BOOST_AUTO_TEST_CASE(Simple2Endpoints)
 
 /**
  * Testcase
- * x =>
- * y => z
- * z =>
+ * x=>
+ * y=>z
+ * z=>
  */
-BOOST_AUTO_TEST_CASE(Simple2Endpoints)
+BOOST_AUTO_TEST_CASE(Simple2Endpoints1Path)
 {
     std::stringstream ss;
     RoutePlanner sut;
@@ -70,7 +70,7 @@ BOOST_AUTO_TEST_CASE(Simple2Endpoints)
 }
 
 /**
- * Testcase
+ * Testcase Example 3
  * u =>
  * v => w
  * w => z
@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE(Simple2Endpoints)
  * y => v
  * z =>
  */
-BOOST_AUTO_TEST_CASE(Simple2Endpoints)
+BOOST_AUTO_TEST_CASE(Example3)
 {
     std::stringstream ss;
     RoutePlanner sut;
@@ -157,6 +157,27 @@ BOOST_AUTO_TEST_CASE(EndpointContinues)
 }
 
 /* Problem:
+* Duplicate rule
+* x=>y
+* x=>y
+* y=>
+* Decision: x=>y rule ignored
+*/
+BOOST_AUTO_TEST_CASE(Duplicate)
+{
+   std::stringstream ss;
+   RoutePlanner sut;
+   sut.addPoint("x", "y");
+   sut.addPoint("x", "y");
+   sut.addEndPoint("y");
+   sut.printPath(ss);
+   sut.createSpanningTree();
+   std::string result; // no initialization required
+   ss >> result;
+   BOOST_CHECK_EQUAL("xy", result);
+}
+
+/* Problem:
 * Point is endpoint but also source of route which continues
 * x=>y
 * x=>
@@ -164,7 +185,7 @@ BOOST_AUTO_TEST_CASE(EndpointContinues)
 * z=>
 * Decision: x used as endpoint x=>y rule ignored
 */
-BOOST_AUTO_TEST_CASE(EndpointContinues)
+BOOST_AUTO_TEST_CASE(EndpointContinuesTerminatedPath)
 {
    std::stringstream ss;
    RoutePlanner sut;

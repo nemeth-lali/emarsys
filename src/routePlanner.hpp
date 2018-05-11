@@ -50,6 +50,7 @@
 #pragma once
 #include <string>
 #include <deque>
+#include <list>
 #include <iosfwd>
 
 namespace routePlanner {
@@ -89,15 +90,19 @@ public:
 private:
     struct PathNode
     {
+        bool isVisited = false;
         bool isEndpoint = false;
         std::string nodeName;
         PathNode(const std::string& pnodeName, bool pisEndpoint = false ):
             isEndpoint(pisEndpoint), nodeName(pnodeName) {}
     };
 
-    using Paths = std::deque<PathNode>;
+    using Path = std::deque<PathNode>;
+    using Paths = std::list<Path>;
 
     Paths paths;
+
+
 };
 
 } /* namespace routePlanner */
