@@ -9,15 +9,10 @@
 
 namespace dueDateCalculator {
 
-DueDateCalculator::DueDateCalculator()
+tm DueDateCalculator::calculateDueDate(const tm& submitDate, const float turnAroundTime)
 {
-    // TODO Auto-generated constructor stub
+    return submitDate;
 
 }
 
-DueDateCalculator::~DueDateCalculator()
-{
-    // TODO Auto-generated destructor stub
 }
-
-} /* namespace dueDateCalculator */

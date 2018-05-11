@@ -6,16 +6,25 @@
  */
 
 #pragma once
+#include <ctime> // In c++20 there are better date and time handling functions
 
 namespace dueDateCalculator {
 
 /*
- *
+ *  Assumption: Submit date is submit date and time
+ *  Your task is to implement the CalculateDueDate method, which takes the submit date and
+ *  turnaround time as an input and returns the date and time when the issue is to be resolved.
  */
 class DueDateCalculator {
 public:
-    DueDateCalculator();
-    virtual ~DueDateCalculator();
+
+    /**
+     * @brief Adds the given turnAroundTime as hours to the submit date
+     * @param submitDate Issue submit date and time
+     * @param turnAroundTime Turn around time of the issue
+     * @return The expected delivery time of the issue
+     */
+    static tm calculateDueDate(const tm& submitDate, const float turnAroundTime);
 };
 
 } /* namespace dueDateCalculator */
