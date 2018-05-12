@@ -19,16 +19,19 @@ namespace dueDateCalculator {
  */
 class DueDateCalculator {
 public:
-
+static constexpr tm invalidsubmitDate{-1,-1,-1,-1,-1,-1};
     /**
      * @brief Adds the given turnAroundTime as hours to the submit date
      * @param submitDate Issue submit date and time
      * @param turnAroundTime Turn around time of the issue
      * @return The expected delivery time of the issue -1 in tm_hour if the time is out of working hours or day
      */
-    static tm calculateDueDate(const tm& submitDate, const float turnAroundTime);
+    static tm calculateDueDate(const tm& submitDate, const int turnAroundTime);
 private:
     static bool isWorkingTime(const tm& submitDate);
+    static void addDays(tm& submitDate, int days);
+    static void calculateAndAddRequiredAmountOfWorkDays(tm& submitDate, int turnAroundTime);
+    static int addWeekendDays(const tm&submitDate, int requiredWorkDays);
 };
 
 } /* namespace dueDateCalculator */

@@ -28,6 +28,15 @@ BOOST_AUTO_TEST_CASE(SimpleInput)
     BOOST_CHECK_EQUAL("Fri May 11 11:15:00 2018\n", std::asctime(&result));
 }
 
+BOOST_AUTO_TEST_CASE(NextDay)
+{
+    //sec min hour day month year
+    std::tm t = {0,15,14,10,4,118};//C++ standard says: 1900 + tm_year = current year
+    std::mktime(&t);
+    t.tm_hour = 14;//mktime uses local time and interprets date as UTC
+    tm result = DueDateCalculator::calculateDueDate(t, 5);
+    BOOST_CHECK_EQUAL("Fri May 11 11:15:00 2018\n", std::asctime(&result));
+}
 
 BOOST_AUTO_TEST_CASE(MultipleDays)
 {
@@ -69,16 +78,6 @@ BOOST_AUTO_TEST_CASE(FridayCase)
     BOOST_CHECK_EQUAL("Mon May 14 10:15:00 2018", std::asctime(&result));
 }
 
-BOOST_AUTO_TEST_CASE(HalfHourCase)
-{
-    //sec min hour day month year
-    std::tm t = {0,16,15,11,4,118};//C++ standard says: 1900 + tm_year = current year //Friday
-    std::mktime(&t);
-    t.tm_hour = 15;//mktime uses local time and interprets date as UTC
-    tm result = DueDateCalculator::calculateDueDate(t, 2.5);
-    BOOST_CHECK_EQUAL("Mon May 14 10:45:00 2018", std::asctime(&result));
-}
-
 BOOST_AUTO_TEST_CASE(TimeOfWorkingHoursLast1Sec)
 {
     //sec min hour day month year
@@ -89,6 +88,15 @@ BOOST_AUTO_TEST_CASE(TimeOfWorkingHoursLast1Sec)
     BOOST_CHECK_EQUAL("Thu May 10 16:59:59 2018", std::asctime(&result));
 }
 
+static const tm invalidsubmitDate{-1,-1,-1,-1,-1,-1};
+
+//no const comparison exists for tm type
+static bool operator==(const tm& lhs, const tm& rhs)
+{
+    return lhs.tm_hour == rhs.tm_hour && lhs.tm_mday == rhs.tm_mday &&
+            lhs.tm_min == rhs.tm_min && lhs.tm_mday == rhs.tm_mday &&
+            lhs.tm_year == rhs.tm_year && lhs.tm_mon == rhs.tm_mon;
+}
 ///Faulty cases
 BOOST_AUTO_TEST_CASE(TimeOutOfWorkingHoursEarly)
 {
@@ -97,7 +105,7 @@ BOOST_AUTO_TEST_CASE(TimeOutOfWorkingHoursEarly)
     std::mktime(&t);
     t.tm_hour = 8;//mktime uses local time and interprets date as UTC
     tm result = DueDateCalculator::calculateDueDate(t, 2);
-    BOOST_CHECK_EQUAL(-1, result.tm_hour);
+    BOOST_CHECK(invalidsubmitDate == result);
 }
 
 BOOST_AUTO_TEST_CASE(TimeOutOfWorkingHoursLate)
@@ -107,7 +115,7 @@ BOOST_AUTO_TEST_CASE(TimeOutOfWorkingHoursLate)
     std::mktime(&t);
     t.tm_hour = 18;//mktime uses local time and interprets date as UTC
     tm result = DueDateCalculator::calculateDueDate(t, 2);
-    BOOST_CHECK_EQUAL(-1, result.tm_hour);
+    BOOST_CHECK(invalidsubmitDate == result);
 }
 
 BOOST_AUTO_TEST_CASE(TimeOutOfWorkingHoursLate1Sec)
@@ -117,8 +125,8 @@ BOOST_AUTO_TEST_CASE(TimeOutOfWorkingHoursLate1Sec)
     std::tm t = {1,0,17,10,4,118};//C++ standard says: 1900 + tm_year = current year //Thursday
     std::mktime(&t);
     t.tm_hour = 17;//mktime uses local time and interprets date as UTC
-    tm result = DueDateCalculator::calculateDueDate(t, 2);
-    BOOST_CHECK_EQUAL(-1, result.tm_hour);
+    const tm result = DueDateCalculator::calculateDueDate(t, 2);
+    BOOST_CHECK(invalidsubmitDate == result);
 }
 
 BOOST_AUTO_TEST_CASE(Weekend)
@@ -128,7 +136,7 @@ BOOST_AUTO_TEST_CASE(Weekend)
     std::mktime(&t);
     t.tm_hour = 14;//mktime uses local time and interprets date as UTC
     tm result = DueDateCalculator::calculateDueDate(t, 2);
-    BOOST_CHECK_EQUAL(-1, result.tm_hour);
+    BOOST_CHECK(invalidsubmitDate == result);
 }
 
 BOOST_AUTO_TEST_SUITE_END ()
