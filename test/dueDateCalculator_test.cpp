@@ -84,10 +84,21 @@ BOOST_AUTO_TEST_CASE(HalfHourCase)
     BOOST_CHECK_EQUAL("Mon May 14 10:45:00 2018", std::asctime(&result));
 }
 
+BOOST_AUTO_TEST_CASE(TimeOfWorkingHoursLast1Sec)
+{
+    std::string input = "2018-05-10T16:59:59";
+    std::tm t = {};
+    std::istringstream ss(input);
+    ss >> std::get_time(&t, "%Y-%m-%dT%H:%M%S");
+    std::mktime(&t);
+    tm result = DueDateCalculator::calculateDueDate(t, 2);
+    BOOST_CHECK_EQUAL("Thu May 10 16:59:59 2018", std::asctime(&result));
+}
+
 ///Faulty cases
 BOOST_AUTO_TEST_CASE(TimeOutOfWorkingHoursEarly)
 {
-    std::string input = "2018-05-10T08:15:00";
+    std::string input = "2018-05-10T08:59:59";
     std::tm t = {};
     std::istringstream ss(input);
     ss >> std::get_time(&t, "%Y-%m-%dT%H:%M%S");
@@ -99,6 +110,17 @@ BOOST_AUTO_TEST_CASE(TimeOutOfWorkingHoursEarly)
 BOOST_AUTO_TEST_CASE(TimeOutOfWorkingHoursLate)
 {
     std::string input = "2018-05-10T18:15:00";
+    std::tm t = {};
+    std::istringstream ss(input);
+    ss >> std::get_time(&t, "%Y-%m-%dT%H:%M%S");
+    std::mktime(&t);
+    tm result = DueDateCalculator::calculateDueDate(t, 2);
+    BOOST_CHECK_EQUAL(-1, result.tm_hour);
+}
+
+BOOST_AUTO_TEST_CASE(TimeOutOfWorkingHoursLate1Sec)
+{
+    std::string input = "2018-05-10T17:00:01";
     std::tm t = {};
     std::istringstream ss(input);
     ss >> std::get_time(&t, "%Y-%m-%dT%H:%M%S");
