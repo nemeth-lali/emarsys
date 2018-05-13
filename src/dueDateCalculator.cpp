@@ -17,6 +17,7 @@ static const int BEGINNING_OF_WORK = 9;
 static const int END_OF_WORK_HOUR = 17;
 static const int MINUTES_IN_HOUR = 60;
 static const time_t ONE_DAY = 24 * 60 * 60;
+static const int WORKING_DAY_IN_WEEK = 5;
 
 tm DueDateCalculator::calculateDueDate(const tm& submitDate, const float turnAroundTime)
 {
@@ -67,10 +68,20 @@ void DueDateCalculator::calculateAndAddRequiredAmountOfWorkDays(tm& submitDate, 
    }
 }
 
-int DueDateCalculator::addWeekendDays(const tm&submitDate, int requiredWorkDays)
+int DueDateCalculator::addWeekendDays(const tm& submitDate, int requiredWorkDays)
 {
-    int retVal = 0;
-    return retVal;
+    if(requiredWorkDays >= WORKING_DAY_IN_WEEK ||
+            requiredWorkDays + submitDate.tm_wday == 6 || //Saturday
+            requiredWorkDays + submitDate.tm_wday == 7) //Sunday
+    {
+        int numberOfWeekends = requiredWorkDays / WORKING_DAY_IN_WEEK;
+        if((requiredWorkDays % WORKING_DAY_IN_WEEK) + submitDate.tm_wday > 5)
+        {
+            ++numberOfWeekends;
+        }
+        return numberOfWeekends * 2;
+    }
+    return 0;
 }
 
 }
