@@ -38,6 +38,16 @@ BOOST_AUTO_TEST_CASE(NextDay)
     BOOST_CHECK_EQUAL("Fri May 11 11:15:00 2018\n", std::asctime(&result));
 }
 
+BOOST_AUTO_TEST_CASE(ModayToFriday)
+{
+    //sec min hour day month year
+    std::tm t = {0,15,9,7,4,118};//C++ standard says: 1900 + tm_year = current year
+    std::mktime(&t);
+    t.tm_hour = 9;//mktime uses local time and interprets date as UTC
+    tm result = DueDateCalculator::calculateDueDate(t, 33);
+    BOOST_CHECK_EQUAL("Fri May 11 10:15:00 2018\n", std::asctime(&result));
+}
+
 BOOST_AUTO_TEST_CASE(MultipleDays)
 {
     //sec min hour day month year
@@ -45,7 +55,7 @@ BOOST_AUTO_TEST_CASE(MultipleDays)
     std::mktime(&t);
     t.tm_hour = 9;//mktime uses local time and interprets date as UTC
     tm result = DueDateCalculator::calculateDueDate(t, 42);
-    BOOST_CHECK_EQUAL("Fri May 16 11:15:00 2018", std::asctime(&result));
+    BOOST_CHECK_EQUAL("Wed May 16 11:15:00 2018\n", std::asctime(&result));
 }
 
 BOOST_AUTO_TEST_CASE(LastDayOfMonth)
@@ -55,7 +65,7 @@ BOOST_AUTO_TEST_CASE(LastDayOfMonth)
     std::mktime(&t);
     t.tm_hour = 16;//mktime uses local time and interprets date as UTC
     tm result = DueDateCalculator::calculateDueDate(t, 2);
-    BOOST_CHECK_EQUAL("Fri Jun 01 10:15:00 2018", std::asctime(&result));
+    BOOST_CHECK_EQUAL("Fri Jun  1 10:15:00 2018\n", std::asctime(&result));
 }
 
 BOOST_AUTO_TEST_CASE(LastDayOfYear)
@@ -65,7 +75,7 @@ BOOST_AUTO_TEST_CASE(LastDayOfYear)
     std::mktime(&t);
     t.tm_hour = 16;//mktime uses local time and interprets date as UTC
     tm result = DueDateCalculator::calculateDueDate(t, 2);
-    BOOST_CHECK_EQUAL("Tue Jan 01 10:15:00 2019", std::asctime(&result));
+    BOOST_CHECK_EQUAL("Tue Jan  1 10:15:00 2019\n", std::asctime(&result));
 }
 
 BOOST_AUTO_TEST_CASE(FridayCase)
@@ -85,7 +95,7 @@ BOOST_AUTO_TEST_CASE(TimeOfWorkingHoursLast1Sec)
     std::mktime(&t);
     t.tm_hour = 14;//mktime uses local time and interprets date as UTC
     tm result = DueDateCalculator::calculateDueDate(t, 2);
-    BOOST_CHECK_EQUAL("Thu May 10 16:59:59 2018", std::asctime(&result));
+    BOOST_CHECK_EQUAL("Thu May 10 16:59:59 2018\n", std::asctime(&result));
 }
 
 static const tm invalidsubmitDate{-1,-1,-1,-1,-1,-1};
